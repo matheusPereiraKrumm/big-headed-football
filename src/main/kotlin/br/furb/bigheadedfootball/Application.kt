@@ -1,5 +1,6 @@
-package br.furb.bigheadedfootball.aplication
+package br.furb.bigheadedfootball
 
+import br.furb.bigheadedfootball.world.World
 import java.awt.BorderLayout
 import java.awt.Cursor
 import javax.media.opengl.GLCanvas
