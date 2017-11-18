@@ -1,5 +1,8 @@
 package br.furb.bigheadedfootball.common
 
+import br.furb.bigheadedfootball.world.components.Color
+import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.objects.GraphicalObject
 import com.sun.opengl.util.GLUT
 import javax.media.opengl.DebugGL
 import javax.media.opengl.GL
@@ -22,28 +25,51 @@ fun initializeProvider(glAutoDrawable: GLAutoDrawable?) {
     GLProvider.glDrawable.gl = DebugGL(GLProvider.gl)
 }
 
-/**
- * Coloca como contexto o GL
- */
 fun gl(block: GL.() -> Unit) = GLProvider.gl.block()
 
-/**
- * Coloca como contexto o GLU
- */
 fun glu(block: GLU.() -> Unit) = GLProvider.glu.block()
 
-/**
- * Coloca como contexto o GLUT
- */
 fun glut(block: GLUT.() -> Unit) = GLProvider.glut.block()
 
-/**
- * Faz o encapsulamento de desenho no GL
- */
+fun GraphicalObject.useTransformation(block: GraphicalObject.() -> Unit) {
+    matrix {
+        gl{
+            glMultMatrixd(transformation.GetDate(), 0)
+            block()
+        }
+    }
+
+}
+
+fun matrix(block: () -> Unit) {
+    gl {
+        glPushMatrix()
+        block()
+        glPopMatrix()
+    }
+
+}
+
+
 fun drawGl(primitive: Int, block: () -> Unit) {
     run {
         gl { glBegin(primitive) }
         block()
         gl { glEnd() }
+    }
+}
+
+fun glColor(color: Color) =
+        gl {
+            glColor3f(color.red, color.green, color.blue)
+        }
+
+fun glPoint(point: Point) = gl { glVertex3d(point.x, point.y, point.z) }
+
+fun useLight(function: () -> Unit) {
+    gl{
+        glEnable(GL.GL_LIGHTING)
+        function()
+        glDisable(GL.GL_LIGHTING)
     }
 }

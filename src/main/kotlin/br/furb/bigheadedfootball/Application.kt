@@ -15,8 +15,10 @@ class Main : JFrame() {
 
     init {
 
-        title = "Polygon Paint"
+        title = "Big Headed Football"
         setBounds(300, 250, 400, 400 + 22)
+        extendedState = JFrame.MAXIMIZED_BOTH
+        isUndecorated = true
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         contentPane.layout = BorderLayout()
 
@@ -29,14 +31,12 @@ class Main : JFrame() {
         val canvas = GLCanvas(glCaps)
         add(canvas, BorderLayout.CENTER)
         canvas.addGLEventListener(world)
+        canvas.addKeyListener(world.mainPlayer)
 
         canvas.requestFocus()
     }
 }
 
-/**
- * Inicialização do kotlin
- */
 fun main(args: Array<String>) {
     Main().isVisible = true
 }
