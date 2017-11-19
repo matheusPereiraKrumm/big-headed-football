@@ -4,6 +4,7 @@ import br.furb.bigheadedfootball.common.*
 import br.furb.bigheadedfootball.world.components.Camera
 import br.furb.bigheadedfootball.world.components.Color
 import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.components.PointCommom
 import br.furb.bigheadedfootball.world.objects.GraphicalObject
 import br.furb.bigheadedfootball.world.objects.parts.*
 import javax.media.opengl.GL
@@ -48,7 +49,7 @@ class World : GLEventListener {
         initializeProvider(glAutoDrawable)
         gl {
             glClearColor(backgroundColor.red, backgroundColor.green, backgroundColor.blue, 1.0f)
-            val posLight = floatArrayOf(25.0f, 500.0f, 30.0f, 0.0f)
+            val posLight = floatArrayOf(5.0f, 50.0f, 90.0f, 0.0f)
             glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, posLight, 0)
             glEnable(GL.GL_LIGHT0)
 
@@ -97,7 +98,7 @@ class World : GLEventListener {
     }
 
     private fun drawAxis() {
-        val center = Point(0.0, 0.0, 0.0)
+        val center = PointCommom.neutralPoint()
         gl {
             // eixo X - Red
             glColor(Color.RED)

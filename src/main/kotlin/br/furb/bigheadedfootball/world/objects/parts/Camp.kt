@@ -2,6 +2,7 @@ package br.furb.bigheadedfootball.world.objects.parts
 
 import br.furb.bigheadedfootball.world.components.Color
 import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.components.PointCommom
 import br.furb.bigheadedfootball.world.objects.GraphicalObject
 import javax.media.opengl.GL
 
@@ -15,7 +16,7 @@ class Camp : GraphicalObject() {
         transformation.translation(25.0, -.5, 70.0)
 
 
-        addPoint(Point(0.0, 0.0, 0.0))
+        addPoint(PointCommom.neutralPoint())
         addPoint(Point(50.0, 0.0, 0.0))
         addPoint(Point(50.0, 0.0, 140.0))
         addPoint(Point(0.0, 0.0, 140.0))

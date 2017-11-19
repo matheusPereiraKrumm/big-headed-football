@@ -4,7 +4,6 @@ import br.furb.bigheadedfootball.common.glDrawable
 import br.furb.bigheadedfootball.world.components.Color
 import br.furb.bigheadedfootball.world.components.Point
 import br.furb.bigheadedfootball.world.components.PointCommom
-import com.intellij.util.io.sleep
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import kotlin.concurrent.thread
@@ -15,12 +14,15 @@ class MainPlayer : Player(), KeyListener {
 
     init {
         transformation.translation(25.0, 0.0, 60.0)
-        var t = thread {
-            while (true){
+        thread {
+            while (true) {
 
-                if (pressed.isNotEmpty()) {
+                if (pressed.contains(UP) ||
+                        pressed.contains(DOWN) ||
+                        pressed.contains(LEFT) ||
+                        pressed.contains(RIGHT)) {
                     val orignPoint = transformation.transformPoint(PointCommom.neutralPoint())
-                    val destinedZPoint = transformation.transformPoint(Point(0.0,0.0, -0.6))
+                    val destinedZPoint = transformation.transformPoint(Point(0.0, 0.0, -0.6))
                     val positiveMoveZPoint = destinedZPoint.diff(orignPoint)
 
                     if (pressed.contains(UP))
@@ -33,7 +35,7 @@ class MainPlayer : Player(), KeyListener {
                     if (pressed.contains(LEFT))
                         rotation(radians)
 
-                    if (pressed.contains(RIGTH))
+                    if (pressed.contains(RIGHT))
                         rotation(-radians)
 
 
@@ -52,7 +54,7 @@ class MainPlayer : Player(), KeyListener {
     private val UP = 38
     private val DOWN = 40
     private val LEFT = 37
-    private val RIGTH = 39
+    private val RIGHT = 39
     override fun keyPressed(e: KeyEvent) {
         println(e.keyCode)
         pressed.add(e.keyCode)
@@ -63,7 +65,7 @@ class MainPlayer : Player(), KeyListener {
         pressed.remove(e.keyCode)
     }
 
-    fun rotation(radians : Double){
+    fun rotation(radians: Double) {
         transformWithCenterBBox {
             transformation.rotateY(radians)
         }
