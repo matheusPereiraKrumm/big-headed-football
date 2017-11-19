@@ -9,7 +9,6 @@ import br.furb.bigheadedfootball.world.objects.parts.*
 import javax.media.opengl.GL
 import javax.media.opengl.GLAutoDrawable
 import javax.media.opengl.GLEventListener
-import com.intellij.ide.a.u.gl
 
 
 class World : GLEventListener {
@@ -17,17 +16,16 @@ class World : GLEventListener {
     private val backgroundColor: Color = Color.GREY
     private val camera: Camera
     private val graphicalObjects: ArrayList<GraphicalObject> = ArrayList()
-    var mainPlayer: MainPlayer
+    var mainPlayer: MainPlayer = MainPlayer()
 
     init {
-        mainPlayer = MainPlayer()
         val camp = Camp()
         camera = Camera(mainPlayer)
 
         graphicalObjects.add(camp)
         graphicalObjects.add(Goal())
         populateCharacter()
-        graphicalObjects.add(Ball(mainPlayer))
+        mainPlayer.childGraphicalObjects.add(Ball())
         graphicalObjects.add(mainPlayer)
     }
 
@@ -56,6 +54,8 @@ class World : GLEventListener {
 
             glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE)
 
+            glEnable(GL.GL_CULL_FACE)
+            glEnable(GL.GL_DEPTH_TEST)
         }
     }
 
@@ -73,15 +73,10 @@ class World : GLEventListener {
 
     override fun display(p0: GLAutoDrawable?) {
         gl {
-            glClear(GL.GL_COLOR_BUFFER_BIT)
+            glClear(GL.GL_COLOR_BUFFER_BIT xor GL.GL_DEPTH_BUFFER_BIT)
             glMatrixMode(GL.GL_MODELVIEW)
             glLoadIdentity()
-            glu {
-                gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
-                        camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
-                        camera.topCam.x, camera.topCam.y, camera.topCam.z)
-            }
-
+            camera.draw()
             draw()
 
             glFlush()

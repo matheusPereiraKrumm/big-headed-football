@@ -1,5 +1,6 @@
 package br.furb.bigheadedfootball.world.components
 
+import br.furb.bigheadedfootball.common.glu
 import br.furb.bigheadedfootball.world.objects.parts.Camp
 import br.furb.bigheadedfootball.world.objects.parts.Player
 
@@ -41,10 +42,18 @@ class Camera {
     }
 
     constructor(player: Player) :
-            this(Point( 2.0,  5.0, -10.0),
-                 Point(6.0, 10.0, 20.0)){
+            this(Point( 1.5,  .4, -3.0),
+                 Point(5.0, 10.0, 20.0)){
         isFromPlayer = true
         this.player = player
+    }
+
+    fun draw(){
+        glu {
+            gluLookAt(eye.x, eye.y, eye.z,
+                    lookAt.x, lookAt.y, lookAt.z,
+                    topCam.x, topCam.y, topCam.z)
+        }
     }
 
 }

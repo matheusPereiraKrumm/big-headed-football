@@ -1,6 +1,9 @@
 package br.furb.bigheadedfootball.world.objects.parts
 
+import br.furb.bigheadedfootball.common.glDrawable
 import br.furb.bigheadedfootball.world.components.Color
+import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.components.PointCommom
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 
@@ -12,24 +15,60 @@ class MainPlayer : Player(), KeyListener {
     }
 
 
+    private val pressed = HashSet<Int>()
 
-    var keysActive = ArrayList<Int>()
+    override fun keyTyped(p0: KeyEvent) {}
 
-    override fun keyTyped(p0: KeyEvent) {
+    private val UP = 38
+    private val DOWN = 40
+    private val LEFT = 37
+    private val RIGTH = 39
+    override fun keyPressed(e: KeyEvent) {
+        println(e.keyCode)
+        pressed.add(e.keyCode)
+        if (pressed.isNotEmpty()) {
+            val orignPoint = transformation.transformPoint(PointCommom.neutralPoint())
+            val destinedZPoint = transformation.transformPoint(Point(0.0,0.0, -1.0))
+            val positiveMoveZPoint = destinedZPoint.diff(orignPoint)
 
-    }
+            if (pressed.contains(UP))
+                transformation.translation(positiveMoveZPoint)
 
-    override fun keyPressed(p0: KeyEvent) {
-        println(p0.keyCode)
-        println(p0.keyChar)
-        if(!keysActive.contains(p0.keyCode))
-            keysActive.add(p0.keyCode)
-        if(keysActive.count() > 0){
+            if (pressed.contains(DOWN))
+                transformation.translation(positiveMoveZPoint.inverted())
 
+            val radians = 0.5
+            if (pressed.contains(LEFT))
+                rotation(radians)
+
+            if (pressed.contains(RIGTH))
+                rotation(-radians)
+
+
+            glDrawable {
+                display()
+            }
         }
     }
 
-    override fun keyReleased(p0: KeyEvent) {
-        keysActive.remove(p0.keyCode)
+    override fun keyReleased(e: KeyEvent) {
+        pressed.remove(e.keyCode)
     }
+
+    fun rotation(radians : Double){
+        transformWithCenterBBox {
+            transformation.rotateY(radians)
+        }
+    }
+
+    private fun transformWithCenterBBox(block: () -> Unit) {
+        val center = PointCommom.neutralPoint()
+        val centerPoint = transformation.transformPoint(center)
+        val inverted = centerPoint.inverted()
+
+        transformation.translation(inverted)
+        block()
+        transformation.translation(centerPoint)
+    }
+
 }

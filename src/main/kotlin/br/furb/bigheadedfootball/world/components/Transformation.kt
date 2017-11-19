@@ -12,6 +12,10 @@ class Transformation {
         matrix = identity.clone()
     }
 
+    fun translation(point: Point) {
+        translation(point.x, point.y, point.z)
+    }
+
     fun translation(x: Double, y: Double, z: Double) {
         val aux = identity.clone()
         aux[12] = x
@@ -35,10 +39,10 @@ class Transformation {
     fun multMatrix(aux: DoubleArray){
         val result = identity.clone()
         for (i in 0..15)
-            result[i] = matrix[i % 4] * aux[i / 4 * 4] +
-                    matrix[i % 4 + 4] * aux[i / 4 * 4 + 1] +
-                    matrix[i % 4 + 8] * aux[i / 4 * 4 + 2] +
-                    matrix[i % 4 + 12] * aux[i / 4 * 4 + 3]
+            result[i] = aux[i % 4] * matrix[i / 4 * 4] +
+                    aux[i % 4 + 4] * matrix[i / 4 * 4 + 1] +
+                    aux[i % 4 + 8] * matrix[i / 4 * 4 + 2] +
+                    aux[i % 4 + 12] * matrix[i / 4 * 4 + 3]
         matrix = result
     }
 
@@ -52,5 +56,23 @@ class Transformation {
 
     fun GetDate(): DoubleArray {
         return matrix
+    }
+
+    fun rotateY(radians: Double) {
+        val aux = identity.clone()
+        aux[0] = Math.cos(radians)
+        aux[8] = Math.sin(radians)
+        aux[2] = -Math.sin(radians)
+        aux[10] = Math.cos(radians)
+        multMatrix(aux)
+    }
+
+    fun showMatrix() {
+
+        println("______________________")
+        println("|" + matrix[0] + " | " + matrix[4] + " | " + matrix[8]  + " | " + matrix[12])
+        println("|" + matrix[1] + " | " + matrix[5] + " | " + matrix[9]  + " | " + matrix[13])
+        println("|" + matrix[2] + " | " + matrix[6] + " | " + matrix[10] + " | " + matrix[14])
+        println("|" + matrix[3] + " | " + matrix[7] + " | " + matrix[11] + " | " + matrix[15])
     }
 }

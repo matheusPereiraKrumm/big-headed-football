@@ -2,6 +2,7 @@ package br.furb.bigheadedfootball.common
 
 import br.furb.bigheadedfootball.world.components.Color
 import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.components.Transformation
 import br.furb.bigheadedfootball.world.objects.GraphicalObject
 import com.sun.opengl.util.GLUT
 import javax.media.opengl.DebugGL
@@ -24,6 +25,7 @@ fun initializeProvider(glAutoDrawable: GLAutoDrawable?) {
     GLProvider.glut = GLUT()
     GLProvider.glDrawable.gl = DebugGL(GLProvider.gl)
 }
+fun glDrawable(block: GLAutoDrawable.() -> Unit) = GLProvider.glDrawable.block()
 
 fun gl(block: GL.() -> Unit) = GLProvider.gl.block()
 
@@ -32,15 +34,19 @@ fun glu(block: GLU.() -> Unit) = GLProvider.glu.block()
 fun glut(block: GLUT.() -> Unit) = GLProvider.glut.block()
 
 fun GraphicalObject.useTransformation(block: GraphicalObject.() -> Unit) {
+    useTransformation(transformation){
+        block()
+    }
+}
+
+fun GraphicalObject.useTransformation(auxTransformation: Transformation, block: GraphicalObject.() -> Unit) {
     matrix {
         gl{
-            glMultMatrixd(transformation.GetDate(), 0)
+            glMultMatrixd(auxTransformation.GetDate(), 0)
             block()
         }
     }
-
 }
-
 fun matrix(block: () -> Unit) {
     gl {
         glPushMatrix()
