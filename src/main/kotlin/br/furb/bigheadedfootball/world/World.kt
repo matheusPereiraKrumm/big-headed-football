@@ -30,7 +30,7 @@ class World : GLEventListener {
         graphicalObjects.add(mainPlayer)
     }
 
-    fun populateCharacter() {
+    private fun populateCharacter() {
         val positions = listOf(
                 Point(10.0, 0.0, 30.0),
                 Point(20.0, 0.0, 20.0),

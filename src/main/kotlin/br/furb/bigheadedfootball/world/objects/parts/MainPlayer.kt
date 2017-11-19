@@ -17,28 +17,8 @@ class MainPlayer : Player(), KeyListener {
         thread {
             while (true) {
 
-                if (pressed.contains(UP) ||
-                        pressed.contains(DOWN) ||
-                        pressed.contains(LEFT) ||
-                        pressed.contains(RIGHT)) {
-                    val orignPoint = transformation.transformPoint(PointCommom.neutralPoint())
-                    val destinedZPoint = transformation.transformPoint(Point(0.0, 0.0, -0.6))
-                    val positiveMoveZPoint = destinedZPoint.diff(orignPoint)
-
-                    if (pressed.contains(UP))
-                        transformation.translation(positiveMoveZPoint)
-
-                    if (pressed.contains(DOWN))
-                        transformation.translation(positiveMoveZPoint.inverted())
-
-                    val radians = 0.2
-                    if (pressed.contains(LEFT))
-                        rotation(radians)
-
-                    if (pressed.contains(RIGHT))
-                        rotation(-radians)
-
-
+                if (conditionRefresh()) {
+                    refreshValues()
                     glDrawable {
                         display()
                     }
@@ -46,6 +26,32 @@ class MainPlayer : Player(), KeyListener {
                 Thread.sleep(70)
             }
         }
+    }
+
+    private fun refreshValues() {
+        val originPoint = transformation.transformPoint(PointCommom.neutralPoint())
+        val destinedZPoint = transformation.transformPoint(Point(0.0, 0.0, -0.6))
+        val positiveMoveZPoint = destinedZPoint.diff(originPoint)
+
+        if (pressed.contains(UP))
+            transformation.translation(positiveMoveZPoint)
+
+        if (pressed.contains(DOWN))
+            transformation.translation(positiveMoveZPoint.inverted())
+
+        val radians = 0.2
+        if (pressed.contains(LEFT))
+            rotation(radians)
+
+        if (pressed.contains(RIGHT))
+            rotation(-radians)
+    }
+
+    private fun conditionRefresh(): Boolean {
+        return pressed.contains(UP) ||
+                pressed.contains(DOWN) ||
+                pressed.contains(LEFT) ||
+                pressed.contains(RIGHT)
     }
 
 
@@ -65,7 +71,7 @@ class MainPlayer : Player(), KeyListener {
         pressed.remove(e.keyCode)
     }
 
-    fun rotation(radians: Double) {
+    private fun rotation(radians: Double) {
         transformWithCenterBBox {
             transformation.rotateY(radians)
         }
