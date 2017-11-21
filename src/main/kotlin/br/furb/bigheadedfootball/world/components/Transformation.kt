@@ -1,5 +1,7 @@
 package br.furb.bigheadedfootball.world.components
 
+import br.furb.bigheadedfootball.world.objects.GraphicalObject
+
 class Transformation {
     private val identity = doubleArrayOf(
             1.0, 0.0, 0.0, 0.0,
@@ -74,5 +76,25 @@ class Transformation {
         println("|" + matrix[1] + " | " + matrix[5] + " | " + matrix[9]  + " | " + matrix[13])
         println("|" + matrix[2] + " | " + matrix[6] + " | " + matrix[10] + " | " + matrix[14])
         println("|" + matrix[3] + " | " + matrix[7] + " | " + matrix[11] + " | " + matrix[15])
+    }
+
+    fun rotation(radians: Double){
+        transformWithPoint(PointCommom.neutralPoint()) {
+            rotateY(radians)
+        }
+    }
+
+    fun rotation(radians: Double, point: Point) {
+        transformWithPoint(point) {
+            rotateY(radians)
+        }
+    }
+
+    private fun transformWithPoint(center: Point, block: () -> Unit) {
+        val centerPoint = transformPoint(center)
+        val inverted = centerPoint.inverted()
+        translation(inverted)
+        block()
+        translation(centerPoint)
     }
 }

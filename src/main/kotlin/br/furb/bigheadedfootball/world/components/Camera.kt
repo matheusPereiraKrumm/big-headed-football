@@ -14,23 +14,35 @@ class Camera {
     private lateinit var player: Player
     private var isFromCamp = false
     private lateinit var camp: Camp
+    var canSeeLeft = false
+    var canSeeRight = false
 
     var lookAt: Point
-        get() {
-            if(isFromPlayer)
-                return player.transformation.transformPoint(field)
+        get() = transformCamPoint(field)
 
-            return field
-        }
     var eye: Point
-        get(){
-            if(isFromPlayer)
-                return player.transformation.transformPoint(field)
-
-            return field
-        }
+        get() = transformCamPoint(field)
     var topCam : Point
 
+    private fun transformCamPoint(point: Point): Point {
+        var finalValue = point
+
+        val radians = 1.0
+        if(canSeeLeft)
+            finalValue = returnRotationPoint(finalValue, radians)
+        if(canSeeRight)
+            finalValue = returnRotationPoint(finalValue, -radians)
+        if(isFromPlayer)
+            finalValue = player.transformation.transformPoint(finalValue)
+
+        return finalValue
+    }
+
+    private fun returnRotationPoint(point: Point, radians: Double): Point {
+        val transform = Transformation()
+        transform.rotateY(radians)
+        return transform.transformPoint(point)
+    }
 
     constructor(camp: Camp) :
             this(Point(25.0,0.0,10.0),

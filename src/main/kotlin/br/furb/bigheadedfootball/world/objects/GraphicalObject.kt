@@ -22,13 +22,17 @@ abstract class GraphicalObject {
                 useTransformation(transformationDistortion){
                     glColor(color)
                     useLight {
-                        glut{
-                            glutSolidCube(size)
-                        }
+                        innerDraw()
                     }
                 }
                 childGraphicalObjects.forEach { it.draw() }
             }
+        }
+    }
+
+    protected open fun innerDraw() {
+        glut{
+            glutSolidCube(size)
         }
     }
 }

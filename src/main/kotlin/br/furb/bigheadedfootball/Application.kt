@@ -1,6 +1,7 @@
 package br.furb.bigheadedfootball
 
 import br.furb.bigheadedfootball.world.World
+import br.furb.bigheadedfootball.world.actions.WorldInteraction
 import java.awt.BorderLayout
 import java.awt.Cursor
 import javax.media.opengl.GLCanvas
@@ -31,7 +32,8 @@ class Main : JFrame() {
         val canvas = GLCanvas(glCaps)
         add(canvas, BorderLayout.CENTER)
         canvas.addGLEventListener(world)
-        canvas.addKeyListener(world.mainPlayer)
+        canvas.addKeyListener(WorldInteraction(world))
+        //canvas.addKeyListener(world.mainPlayer)
 
         canvas.requestFocus()
     }

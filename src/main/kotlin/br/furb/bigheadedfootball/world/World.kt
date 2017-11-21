@@ -15,15 +15,15 @@ import javax.media.opengl.GLEventListener
 class World : GLEventListener {
 
     private val backgroundColor: Color = Color.GREY
-    private val camera: Camera
     private val graphicalObjects: ArrayList<GraphicalObject> = ArrayList()
+    val camera: Camera
     var mainPlayer: MainPlayer = MainPlayer()
 
     init {
         val camp = Camp()
+        graphicalObjects.add(camp)
         camera = Camera(mainPlayer)
 
-        graphicalObjects.add(camp)
         graphicalObjects.add(Goal())
         populateCharacter()
         mainPlayer.childGraphicalObjects.add(Ball())
@@ -49,7 +49,7 @@ class World : GLEventListener {
         initializeProvider(glAutoDrawable)
         gl {
             glClearColor(backgroundColor.red, backgroundColor.green, backgroundColor.blue, 1.0f)
-            val posLight = floatArrayOf(5.0f, 50.0f, 90.0f, 0.0f)
+            val posLight = floatArrayOf(5.0f, 30.0f, 90.0f, 0.0f)
             glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, posLight, 0)
             glEnable(GL.GL_LIGHT0)
 
