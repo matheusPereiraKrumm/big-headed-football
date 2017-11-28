@@ -73,8 +73,8 @@ class World : GLEventListener {
             glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
 
 
-            TexturesContext.campTexture = Texture(0, "./img/campo1.jpg")
-            TexturesContext.golTexture = Texture(1, "./img/teste.jpg")
+            TexturesContext.campTexture = Texture(0, "./img/campo.jpg")
+            TexturesContext.golTexture = Texture(1, "./img/gol.jpg")
             TexturesContext.arqTexture = Texture(2, "./img/arq.jpg")
             //TexturesContext.campTexture.load()
             //TexturesContext.golTexture.load()
