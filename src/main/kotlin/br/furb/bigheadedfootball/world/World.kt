@@ -7,7 +7,6 @@ import br.furb.bigheadedfootball.world.objects.parts.*
 import javax.media.opengl.GL
 import javax.media.opengl.GLAutoDrawable
 import javax.media.opengl.GLEventListener
-import com.intellij.ide.a.u.gl
 import kotlin.system.measureTimeMillis
 
 
@@ -17,11 +16,13 @@ class World : GLEventListener {
     private val graphicalObjects: ArrayList<GraphicalObject> = ArrayList()
     val camera: Camera
     var mainPlayer: MainPlayer = MainPlayer()
+    val camp: Camp = Camp()
     private var _height: Int = 0
     private var _width: Int = 0
+    val othersPlayers: ArrayList<Player> = ArrayList()
+
 
     init {
-        val camp = Camp()
         graphicalObjects.add(camp)
         camera = Camera(mainPlayer)
 
@@ -43,6 +44,7 @@ class World : GLEventListener {
             val character = Player()
             character.transformation.translation(it.x, it.y, it.z)
             graphicalObjects.add(character)
+            othersPlayers.add(character)
         }
     }
 

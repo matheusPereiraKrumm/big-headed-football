@@ -7,4 +7,6 @@ class DataInputs(val world: World) {
     val keysReleased = HashSet<Int>()
     fun mainPlayer() = world.mainPlayer
     fun cam() = world.camera
+    fun camp() = world.camp
+    fun otherPlayers() = world.othersPlayers
 }

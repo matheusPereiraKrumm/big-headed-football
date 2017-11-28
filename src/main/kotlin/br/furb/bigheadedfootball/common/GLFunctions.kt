@@ -1,6 +1,9 @@
 package br.furb.bigheadedfootball.common
 
-import br.furb.bigheadedfootball.world.components.*
+import br.furb.bigheadedfootball.world.components.Color
+import br.furb.bigheadedfootball.world.components.Point
+import br.furb.bigheadedfootball.world.components.Texture
+import br.furb.bigheadedfootball.world.components.Transformation
 import br.furb.bigheadedfootball.world.objects.GraphicalObject
 import com.sun.opengl.util.GLUT
 import javax.media.opengl.DebugGL

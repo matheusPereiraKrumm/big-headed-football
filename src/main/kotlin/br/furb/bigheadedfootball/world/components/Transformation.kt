@@ -1,8 +1,6 @@
 package br.furb.bigheadedfootball.world.components
 
-import br.furb.bigheadedfootball.world.objects.GraphicalObject
-
-class Transformation {
+class Transformation() {
     private val identity = doubleArrayOf(
             1.0, 0.0, 0.0, 0.0,
             0.0, 1.0, 0.0, 0.0,
@@ -12,6 +10,10 @@ class Transformation {
 
     fun reset() {
         matrix = identity.clone()
+    }
+
+    constructor(transformation: Transformation) : this(){
+        matrix = transformation.matrix.clone()
     }
 
     fun translation(point: Point) {

@@ -1,6 +1,5 @@
 package br.furb.bigheadedfootball.world.objects.parts
 
-import br.furb.bigheadedfootball.common.glut
 import br.furb.bigheadedfootball.world.components.Color
 
 class MainPlayer : Player() {

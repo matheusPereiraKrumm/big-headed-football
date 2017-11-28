@@ -11,5 +11,9 @@ data class Point(var x: Double,
             z - otherPoint.z)
 
     fun inverted() = Point(-x, -y, -z)
+    fun innerIn2D(smallerPoint: Point, biggerPoint: Point): Boolean {
+        return (smallerPoint.x <= x && x <= biggerPoint.x &&
+                smallerPoint.z <= z && z <= biggerPoint.z)
+    }
 }
 
