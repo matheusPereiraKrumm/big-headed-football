@@ -2,7 +2,10 @@ package br.furb.bigheadedfootball.world.objects
 
 import br.furb.bigheadedfootball.common.*
 import br.furb.bigheadedfootball.world.components.Color
+import br.furb.bigheadedfootball.world.components.Texture
 import br.furb.bigheadedfootball.world.components.Transformation
+import javax.media.opengl.GL
+
 
 abstract class GraphicalObject {
     abstract var color: Color

@@ -13,6 +13,7 @@ import javax.swing.WindowConstants
 class Main : JFrame() {
 
     var world: World = World()
+    val canvas: GLCanvas
 
     init {
 
@@ -29,16 +30,17 @@ class Main : JFrame() {
         glCaps.greenBits = 8
         glCaps.alphaBits = 8
         cursor = Cursor(Cursor.HAND_CURSOR)
-        val canvas = GLCanvas(glCaps)
+        canvas = GLCanvas(glCaps)
         add(canvas, BorderLayout.CENTER)
         canvas.addGLEventListener(world)
         canvas.addKeyListener(WorldInteraction(world))
         //canvas.addKeyListener(world.mainPlayer)
 
-        canvas.requestFocus()
     }
 }
 
 fun main(args: Array<String>) {
-    Main().isVisible = true
+    val m = Main()
+    m.isVisible = true
+    m.canvas.requestFocus()
 }

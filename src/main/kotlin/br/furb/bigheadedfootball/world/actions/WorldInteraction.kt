@@ -4,6 +4,7 @@ import br.furb.bigheadedfootball.common.glDrawable
 import br.furb.bigheadedfootball.world.World
 import br.furb.bigheadedfootball.world.actions.common.DataInputs
 import br.furb.bigheadedfootball.world.actions.components.CamSpyAction
+import br.furb.bigheadedfootball.world.actions.components.ChangeFacesSphereAction
 import br.furb.bigheadedfootball.world.actions.components.IInteraction
 import br.furb.bigheadedfootball.world.actions.components.MainPlayerAction
 import java.awt.event.KeyEvent
@@ -12,7 +13,7 @@ import kotlin.concurrent.thread
 
 class WorldInteraction(val world: World) : KeyListener {
     private val interactions: Array<IInteraction> =
-            arrayOf(MainPlayerAction(), CamSpyAction())
+            arrayOf(MainPlayerAction(), CamSpyAction(), ChangeFacesSphereAction())
     private val data = DataInputs(world)
 
     init {
@@ -21,7 +22,7 @@ class WorldInteraction(val world: World) : KeyListener {
                 val canRepaint = executeActions()
                 if (canRepaint) glDrawable { display() }
 
-                Thread.sleep(70)
+                Thread.sleep(5)
             }
         }
     }

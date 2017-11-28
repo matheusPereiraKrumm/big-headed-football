@@ -97,4 +97,19 @@ class Transformation {
         block()
         translation(centerPoint)
     }
+
+    fun rotation90X() {
+        transformWithPoint(PointCommom.neutralPoint()) {
+            rotateX(Math.PI/2)
+        }
+    }
+
+    private fun rotateX(radians: Double) {
+        val aux = identity.clone()
+        aux[5] =   Math.cos(radians)
+        aux[9] =  -Math.sin(radians)
+        aux[6] =   Math.sin(radians)
+        aux[10] =  Math.cos(radians)
+        multMatrix(aux)
+    }
 }
